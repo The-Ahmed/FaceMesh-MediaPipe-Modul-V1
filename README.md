@@ -1,7 +1,7 @@
 # mediapipe-bin
 MediaPipe Python Wheel installer for RaspberryPi OS aarch64, Ubuntu aarch64 Debian aarch64, L4T/Jetson Nano aarch64.
 
-## 1. Binary type
+## 0. Binary type
 |Device|OS|Distribution|Architecture|Python ver|Numpy ver|Note|
 |:--|:--|:--|:--|:--|:--|:--|
 |RaspberryPi3/4|RaspberryPiOS/Debian|Buster|aarch64 / armv8|3.7.3|1.19/1.20|64bit, glibc2.28|
@@ -11,7 +11,7 @@ MediaPipe Python Wheel installer for RaspberryPi OS aarch64, Ubuntu aarch64 Debi
 |(Experimental) RaspberryPi3/4|Debian|Bullseye|aarch64 / armv8|3.9.2|1.20|64bit, glibc2.31, gcc-8.5|
 |RaspberryPi3/4|Ubuntu 21.04|Hirsute|aarch64 / armv8|3.9.5|1.20|64bit, glibc2.33, gcc-7.5|
 
-## 2. Wheels Install Opencv 4.5.5
+## 1. Wheels Install Opencv 4.5.5
 ```bash
 # check your memory first
 $ free -m
@@ -36,14 +36,41 @@ $ ./tensorflow/lite/tools/make/download_dependencies.sh
 # run the C++ installation (± 25 min)
 $ ./tensorflow/lite/tools/make/build_aarch64_lib.sh
 ```
-## 3. Sample
-### 3-1. RaspberryPi4 + RaspberryPi OS 64bit (aarch64) + Python3.7 + CPU only (9.0FPS)
+## 3. Bazel
+### 3-1. Step1
 ```bash
-$ cd ~
-$ git clone https://github.com/Kazuhito00/mediapipe-python-sample && cd mediapipe-python-sample
-$ python3 sample_hand.py
+# get a fresh start
+$ sudo apt-get update
+$ sudo apt-get upgrade
+# install pip and pip3
+$ sudo apt-get install python3-pip
+# install some tools
+$ sudo apt-get install zip unzip curl
+# install Java
+$ sudo apt-get install openjdk-11-jdk
 ```
-
+```bash
+$ wget https://github.com/bazelbuild/bazel/releases/download/4.2.1/bazel-4.2.1-dist.zip
+$ unzip -d bazel bazel-4.2.1-dist.zip
+$ cd bazel
+```
+During installation, Bazel uses a predefined ratio of the available working memory. This ratio is too small due to the limited size of the RAM of the Raspberry Pi. To prevent crashes, we must define the size of this memory to a maximum of 40% of the RAM onboard. For instance, 800 Mbyte for 2 GByte RAM Raspberry Pi. It is done by adding some extra information to the script file compile.sh. You can add the text -J-Xmx800M to the line that begins with run..(around line 144). See the screen below. Use the well-known <Ctrl + X>, <Y>, <Enter> to save the change (see the slide show above).
+```bash
+  $ nano scripts/bootstrap/compile.sh -c
+``` 
+  Once the Java environment for Bazel has been maximized, you can start building the Bazel software with the next commands. When finished, copy the binary file to the /usr/local/bin location so that bash can find the executable anywhere. The final action is to delete the zip file. The total build takes about 33 minutes.
+```bash
+ # start the build
+$ env EXTRA_BAZEL_ARGS="--host_javabase=@local_jdk//:jdk" bash ./compile.sh
+# copy the binary
+$ sudo cp output/bazel /usr/local/bin/bazel
+# clean up
+$ cd ~
+$ rm bazel-4.2.1-dist.zip
+# if you have a copied bazel to /usr/local/bin you may also
+# delete the whole bazel directory, freeing another 500 MByte
+$ sudo rm -rf bazel
+``` 
 ### 3-2. Jetson Nano + L4T 32.5.1 64bit (aarch64) + Python3.6 + GPU (22.0FPS)
 ```bash
 $ cd ~
