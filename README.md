@@ -122,16 +122,16 @@ $ sudo rm -rf bazel
 
 mediapipe/WORKSPACE
     
-    ```bash
+```bash
   # WORKSPACE
 new_local_repository(
   name = "linux_opencv",
   build_file = "@//third_party:opencv_linux.BUILD",
   path = "/usr/local",
 )
-  ```
+```
   mediapipe/third_party/ffmpeg_linux.BUILD
-    ```bash
+```bash
   # opencv_linux.BUILD for OpenCV 4 installed to /usr/local
 cc_library(
   name = "opencv",
@@ -153,6 +153,7 @@ cc_library(
     "-l:libopencv_videoio.so",
   ],
 )
+```
 ### 4-3. another Information.* 
 - **[Build the Wheel installer for MediaPipe](https://google.github.io/mediapipe/getting_started/install.html)**
 - **[Build the Wheel installer for MediaPipe-Solution](https://stackoverflow.com/questions/67410495/how-to-install-and-use-mediapipe-on-raspberry-pi-4)**
