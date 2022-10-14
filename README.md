@@ -117,8 +117,24 @@ $ sudo rm -rf bazel
   ```bash
   sudo pip3 uninstall mediapipe-rpi4
   ```
-  
+  Sometimes the protobuf package might be installed without your involvement. For this, you have two solutions to apply. Try one of the below solutions and it should work. like the Pictur
+  <a href="https://imgur.com/eHW2mT0"><img src="https://i.imgur.com/eHW2mT0.png" title="source: imgur.com" /></a>
+ # Solution :
+You can downgrade the protobuf plugin,
   ```bash
+  pip install protobuf==3.20.*
+  ```
+  <a href="https://imgur.com/Fszx01g"><img src="https://i.imgur.com/Fszx01g.png" title="source: imgur.com" /></a>
+    ```bash
+  
+  ```
+    ```bash
+  
+  ```
+    ```bash
+  
+  ```
+    ```bash
   
   ```
 
