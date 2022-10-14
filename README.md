@@ -117,6 +117,9 @@ $ sudo rm -rf bazel
   ```bash
   sudo pip3 uninstall mediapipe-rpi4
   ```
+  ### 4. another Information.* 
+- **[Build the Wheel installer for MediaPipe](https://google.github.io/mediapipe/getting_started/install.html)**
+- **[Build the Wheel installer for MediaPipe-Solution](https://stackoverflow.com/questions/67410495/how-to-install-and-use-mediapipe-on-raspberry-pi-4)**
   In the next step you have to set the path correctly in WORKSPACE, opencv_linux.BUILD, ffmpeg_linux.BUILD.
   Like this:
 
@@ -154,9 +157,7 @@ cc_library(
   ],
 )
 ```
-### 4-3. another Information.* 
-- **[Build the Wheel installer for MediaPipe](https://google.github.io/mediapipe/getting_started/install.html)**
-- **[Build the Wheel installer for MediaPipe-Solution](https://stackoverflow.com/questions/67410495/how-to-install-and-use-mediapipe-on-raspberry-pi-4)**
+
   
   Sometimes the protobuf package might be installed without your involvement. For this, you have two solutions to apply. Try one of the below solutions and it should work. like the Pictur
   
