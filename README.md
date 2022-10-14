@@ -103,51 +103,22 @@ $ rm bazel-4.2.1-dist.zip
 $ sudo rm -rf bazel
 ``` 
 <a href="https://imgur.com/6nKFSqf"><img src="https://i.imgur.com/6nKFSqf.png" title="source: imgur.com" /></a>
+### MediaPipe Python Package (Unofficial) for RaspberryPi4 OS
+  
+ ```bash
+  sudo apt install ffmpeg python3-opencv python3-pip
+  ```
+  ###For Raspberry Pi 4
+  ###Install package
+  ```bash
+  sudo pip3 install mediapipe-rpi4
+  ```
+  To Uninstall package
+  ```bash
+  sudo pip3 uninstall mediapipe-rpi4
+  ```
+  
+  ```bash
+  
+  ```
 
-### 3-2. Jetson Nano + L4T 32.5.1 64bit (aarch64) + Python3.6 + GPU (22.0FPS)
-```bash
-$ cd ~
-$ git clone https://github.com/Kazuhito00/mediapipe-python-sample && cd mediapipe-python-sample
-$ python3 sample_hand.py
-```
-
-
-## 4. Build
-### 4-1. Other than Jetson Nano
-```bash
-$ sudo apt update && \
-  sudo apt install -y \
-  python3-dev cmake protobuf-compiler \
-  python3-pip git make openjdk-11-jdk-headless
-
-$ sudo pip3 install pip setuptools --upgrade
-
-$ git clone -b v0.8.4 https://github.com/google/mediapipe && cd mediapipe
-
-$ sed -i -e "/\"imgcodecs\"/d;/\"calib3d\"/d;/\"features2d\"/d;/\"highgui\"/d;/\"video\"/d;/\"videoio\"/d" third_party/BUILD
-$ sed -i -e "/-ljpeg/d;/-lpng/d;/-ltiff/d;/-lImath/d;/-lIlmImf/d;/-lHalf/d;/-lIex/d;/-lIlmThread/d;/-lrt/d;/-ldc1394/d;/-lavcodec/d;/-lavformat/d;/-lavutil/d;/-lswscale/d;/-lavresample/d" third_party/BUILD
-
-$ sed -i -e "/^        # Optimization flags/i \        \"ENABLE_NEON\": \"OFF\"," third_party/BUILD
-$ sed -i -e "/^        # Optimization flags/i \        \"WITH_TENGINE\": \"OFF\"," third_party/BUILD
-
-$ wget https://github.com/PINTO0309/Bazel_bin/raw/main/3.7.2/aarch64/install.sh
-$ sudo chmod +x install.sh
-$ ./install.sh
-
-$ sudo python3 setup.py gen_protos
-$ sudo bazel clean --expunge
-$ sudo python3 setup.py bdist_wheel
-```
-### 4-2. (Experimental / WIP) Jetson Nano
-- **[Verification of mediapipe's GPU-enabled .pbtxt processing method](https://zenn.dev/pinto0309/scraps/71368ef3d74438)**
-
-### 4-3. opencv_contrib_python-4.5.* 
-- **[Build the Wheel installer for opencv-contrib-python](https://qengineering.eu/install-opencv-4.5-on-jetson-nano.html)**
-- **[Build the Wheel installer for opencv-contrib-python](https://zenn.dev/pinto0309/scraps/e10bc3a8be82f1)**
-
-
-## 5. Reference
-1. I was inspired by **[jiuqiant's](https://github.com/jiuqiant/mediapipe_python_aarch64)** **[mediapipe_python_aarch64](https://github.com/jiuqiant/mediapipe_python_aarch64)** to create this repository. Thank you so much! 🌠
-2. Article: **[How to enjoy MediaPipe easily with Raspberry Pi - karaage0703 - Zenn](https://zenn.dev/karaage0703/articles/63fed2a261096d)** 🌟
-3. Sample: **[mediapipe-python-sample - Kazuhito00 - GitHub](https://github.com/Kazuhito00/mediapipe-python-sample)** 🌟
-4. OS Image: **https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2021-05-28/**
