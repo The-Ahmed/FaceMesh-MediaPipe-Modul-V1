@@ -120,6 +120,8 @@ $ sudo rm -rf bazel
   ### 4. another Information.* 
 - **[Build the Wheel installer for MediaPipe](https://google.github.io/mediapipe/getting_started/install.html)**
 - **[Build the Wheel installer for MediaPipe-Solution](https://stackoverflow.com/questions/67410495/how-to-install-and-use-mediapipe-on-raspberry-pi-4)**
+  
+  
   In the next step you have to set the path correctly in WORKSPACE, opencv_linux.BUILD, ffmpeg_linux.BUILD.
   Like this:
 
