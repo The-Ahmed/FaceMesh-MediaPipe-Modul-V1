@@ -11,6 +11,28 @@ MediaPipe Python Wheel installer for RaspberryPi OS aarch64, Ubuntu aarch64 Debi
 |(Experimental) RaspberryPi3/4|Debian|Bullseye|aarch64 / armv8|3.9.2|1.20|64bit, glibc2.31, gcc-8.5|
 |RaspberryPi3/4|Ubuntu 21.04|Hirsute|aarch64 / armv8|3.9.5|1.20|64bit, glibc2.33, gcc-7.5|
 
+## 1. Wheels Memory swap size.
+Building the full TensorFlow 2.8 package requires more than 6 Gbytes of RAM. If you have a Raspberry Pi 4 with 8 Gbyte RAM, you are in the clear. Otherwise, make sure to increase the swap size to meet this demand. With 4 Gbyte RAM onboard, zram can deliver the extra 2 Gbyte. With 2 Gbyte of RAM, you can no longer rely on zram to compress above a factor of 2. In this case, they have to reinstall dphys-swapfile to get the extra space from your SD card. Please follow the next commands if you have to install dphys-swapfile. It takes quite a while to complete the reboot when setting up swap space on a Bullseye OS.
+```bash
+# install dphys-swapfile
+$ sudo apt-get install dphys-swapfile
+# give the required memory size
+$ sudo nano /etc/dphys-swapfile
+# reboot afterwards
+$ sudo reboot
+```
+<a href="https://imgur.com/UNGkGo1"><img src="https://i.imgur.com/UNGkGo1.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/LMLRrap"><img src="https://i.imgur.com/LMLRrap.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/5zWC1Ky"><img src="https://i.imgur.com/5zWC1Ky.png" title="source: imgur.com" /></a>
+For the record, the figure shown is total amount of swap space allocated by dphys-swapfile and zram. Please, don't forget to remove dphys-swapfile when your done.
+
+Note: if you reboot the Raspberry Pi with both zram and dphys-swapfile enabled, zram will disable dphys-swapfile during boot. You must manually reactivate this service.
+```bash
+# reactivate dphys-swapfile after a reboot
+# (when zram and dphys-swapfile are both enabled)
+$ sudo /etc/init.d/dphys-swapfile stop
+$ sudo /etc/init.d/dphys-swapfile start
+```
 ## 1. Wheels Install Opencv 4.5.5
 ```bash
 # check your memory first
@@ -66,8 +88,8 @@ During installation, Bazel uses a predefined ratio of the available working memo
 ```bash
 -J-Xmx800M
 ```
-### 3-1. Step4
-  Once the Java environment for Bazel has been maximized, you can start building the Bazel software with the next commands. When finished, copy the binary file to the /usr/local/bin location so that bash can find the executable anywhere. The final action is to delete the zip file. The total build takes about 33 minutes.
+### 3-1. Step3
+Once the Java environment for Bazel has been maximized, you can start building the Bazel software with the next commands. When finished, copy the binary file to the /usr/local/bin location so that bash can find the executable anywhere. The final action is to delete the zip file. The total build takes about 33 minutes.
 ```bash
  # start the build
 $ env EXTRA_BAZEL_ARGS="--host_javabase=@local_jdk//:jdk" bash ./compile.sh
