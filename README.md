@@ -49,15 +49,24 @@ $ sudo apt-get install zip unzip curl
 # install Java
 $ sudo apt-get install openjdk-11-jdk
 ```
+### 3-1. Step2
 ```bash
 $ wget https://github.com/bazelbuild/bazel/releases/download/4.2.1/bazel-4.2.1-dist.zip
 $ unzip -d bazel bazel-4.2.1-dist.zip
 $ cd bazel
 ```
-During installation, Bazel uses a predefined ratio of the available working memory. This ratio is too small due to the limited size of the RAM of the Raspberry Pi. To prevent crashes, we must define the size of this memory to a maximum of 40% of the RAM onboard. For instance, 800 Mbyte for 2 GByte RAM Raspberry Pi. It is done by adding some extra information to the script file compile.sh. You can add the text -J-Xmx800M to the line that begins with run..(around line 144). See the screen below. Use the well-known <Ctrl + X>, <Y>, <Enter> to save the change (see the slide show above).
+### 3-1. Step3
+During installation, Bazel uses a predefined ratio of the available working memory. This ratio is too small due to the limited size of the RAM of the Raspberry Pi. To prevent crashes, we must define the size of this memory to a maximum of 40% of the RAM onboard. For instance, 800 Mbyte for 2 GByte RAM Raspberry Pi. It is done by adding some extra information to the script file compile.sh. You can add the text ( -J-Xmx800M ) to the line that begins with run..(around line 144). See the screen below. Use the well-known <Ctrl + X>, <Y>, <Enter> to save the change (see the slide show above).
+  
+  <a href="https://imgur.com/3OEfJ0o"><img src="https://i.imgur.com/3OEfJ0o.png" title="source: imgur.com" /></a>
+
 ```bash
   $ nano scripts/bootstrap/compile.sh -c
 ``` 
+```bash
+-J-Xmx800M
+```
+### 3-1. Step4
   Once the Java environment for Bazel has been maximized, you can start building the Bazel software with the next commands. When finished, copy the binary file to the /usr/local/bin location so that bash can find the executable anywhere. The final action is to delete the zip file. The total build takes about 33 minutes.
 ```bash
  # start the build
@@ -71,6 +80,8 @@ $ rm bazel-4.2.1-dist.zip
 # delete the whole bazel directory, freeing another 500 MByte
 $ sudo rm -rf bazel
 ``` 
+<a href="https://imgur.com/6nKFSqf"><img src="https://i.imgur.com/6nKFSqf.png" title="source: imgur.com" /></a>
+
 ### 3-2. Jetson Nano + L4T 32.5.1 64bit (aarch64) + Python3.6 + GPU (22.0FPS)
 ```bash
 $ cd ~
